@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-sand-50 text-ink-900 font-body;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-sand-100; }
+::-webkit-scrollbar-thumb { @apply bg-ochre-500 rounded-full; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(32px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.modal-backdrop { animation: fadeIn 0.25s ease; }
+.modal-card { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.btn-cta {
+  background-size: 200% auto;
+  transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-cta:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+}
+
+.proximity-cols {
+  columns: 2;
+  column-gap: 24px;
+}
+@media (max-width: 768px) {
+  .proximity-cols { columns: 1; }
+}
+
+/* Line-drawing style divider used throughout, evokes the farm's fence-line plots */
+.plot-divider {
+  height: 3px;
+  width: 64px;
+  background: repeating-linear-gradient(90deg, #a2cd15 0 10px, transparent 10px 16px);
+}
+
+/* ── Mobile side gutter ──
+   Every full-bleed section keeps a comfortable 20px breathing space on phones,
+   so nothing ever touches the screen edge. */
+@media (max-width: 640px) {
+  .gutter { padding-left: 20px !important; padding-right: 20px !important; }
+}
+@media (max-width: 380px) {
+  .gutter { padding-left: 16px !important; padding-right: 16px !important; }
+}
+
+/* ── Premium motion system ── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(162,205,21,0.5); }
+  50% { box-shadow: 0 0 0 12px rgba(162,205,21,0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowUpDown {
+  0%, 100% { box-shadow: 0 0 6px 0 rgba(162,205,21,0.35), 0 0 0 0 rgba(162,205,21,0.25); }
+  50% { box-shadow: 0 0 18px 4px rgba(162,205,21,0.65), 0 0 30px 8px rgba(162,205,21,0.35); }
+}
+.price-glow {
+  animation: glowUpDown 2.2s ease-in-out infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(20, 48, 10, 0.18);
+}
+
+.hover-zoom img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.hover-zoom:hover img { transform: scale(1.06); }
+
+.btn-glow { animation: glowPulse 2.6s ease-in-out infinite; }
+.float-anim { animation: floatY 3.4s ease-in-out infinite; }
+
+.hero-enter { animation: heroFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-enter-delay-1 { animation-delay: 0.15s; }
+.hero-enter-delay-2 { animation-delay: 0.3s; }
+.hero-enter-delay-3 { animation-delay: 0.45s; }
+
+.shimmer-text {
+  background: linear-gradient(90deg, #a2cd15 0%, #e4f7a3 50%, #a2cd15 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3.5s linear infinite;
+}
+
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0%;
+  background: #a2cd15;
+  transition: width 0.3s ease;
+}
+.nav-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Continuous moving image carousel (marquee) ── */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-row {
+  width: 100%;
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 32s linear infinite;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (max-width: 640px) {
+  .marquee-track { animation-duration: 22s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hover-lift, .hover-zoom img, .btn-glow, .float-anim, .hero-enter, .shimmer-text, .marquee-track, .price-glow {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
