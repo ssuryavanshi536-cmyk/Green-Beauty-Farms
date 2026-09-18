@@ -11,7 +11,7 @@ const HERO_IMG = `${CLOUD}/v1789642363/farmhouse_img.png`
 const img = () => HERO_IMG
 
 // Master site layout (brochure plan)
-const LAYOUT_IMG = `${CLOUD}/v1789728165/Green_Beauty_Farms_Brochure_1_-5-Picsart-AiImageEnhancer.png`
+const LAYOUT_IMG = `https://res.cloudinary.com/ezartvu7/image/upload/v1789752598/Untitled_design.png`
 
 // "Where you'll be" — expressway connectivity map
 const EXPRESSWAY_IMG = `${CLOUD}/v1789728165/exprway.png`
@@ -553,7 +553,7 @@ export default function GreenBeautyFarmsPage() {
                 Each farmhouse plot at Green Beauty Farms arrives with its boundary already fenced, its own gate and pathway laid, and 10 to 15 plants already in the ground. Wide black-topped roads, street lighting and utility lines run through every phase, so building your own farmhouse — on your own schedule — starts from farm land in Noida that already feels finished.
               </p>
               <p className="text-sm leading-relaxed text-ink-600">
-                Every plot is handed over individually fenced with a private gate and pathway, 10 to 15 plants already planted, wide internal roads on all sides, street lighting through the lane and a government electricity connection at the boundary. Sizes start at 1008 sq. yd. and are priced from {PLOT_PRICE_RANGE}.
+                Every plot is handed over individually fenced with a private gate and pathway, 10 to 15 plants already planted, wide internal roads on all sides, street lighting through the lane and a solar panels connection at the boundary. Sizes start at 1008 sq. yd. and are priced from {PLOT_PRICE_RANGE}.
               </p>
             </div>
             <div className="flex justify-center">
