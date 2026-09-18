@@ -11,7 +11,7 @@ const HERO_IMG = `${CLOUD}/v1789642363/farmhouse_img.png`
 const img = () => HERO_IMG
 
 // Master site layout (brochure plan)
-const LAYOUT_IMG = `https://res.cloudinary.com/ezartvu7/image/upload/v1789752598/Untitled_design.png`
+const LAYOUT_IMG = `https://res.cloudinary.com/ezartvu7/image/upload/v1789757281/GBF-LAYOUT.webp`
 
 // "Where you'll be" — expressway connectivity map
 const EXPRESSWAY_IMG = `${CLOUD}/v1789728165/exprway.png`
