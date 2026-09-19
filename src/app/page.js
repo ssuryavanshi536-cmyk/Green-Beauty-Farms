@@ -878,7 +878,6 @@ export default function GreenBeautyFarmsPage() {
           </div>
           <div className="flex flex-wrap items-center justify-between gap-2 border-t border-sand-200 pt-5 text-xs text-ink-400">
             <p>© {new Date().getFullYear()} Green Beauty Farms, Sector 135 Noida. All rights reserved.</p>
-            <p>RERA registration under process · Prices subject to change without prior notice.</p>
           </div>
         </div>
       </footer>
