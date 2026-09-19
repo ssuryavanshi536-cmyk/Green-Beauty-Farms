@@ -249,7 +249,7 @@ function EnquiryForm({ source, dark = true, heroMobile = false }) {
         if (typeof window !== 'undefined' && window.gtag) {
           // TODO: replace with the real Google Ads conversion label
           window.gtag('event', 'conversion', {
-            send_to: 'AW-18461296898/CONVERSION_LABEL',
+            send_to: 'AW-18461296898/xT2HCJWTj_0cEIKShONE',
             value: 1.0,
             currency: 'INR',
           })
