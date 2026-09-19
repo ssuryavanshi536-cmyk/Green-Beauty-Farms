@@ -165,6 +165,24 @@ export default function RootLayout({ children }) {
             gtag('config', 'AW-18461296898', { allow_enhanced_conversions: true });
           `}
         </Script>
+        <Script id="google-click-to-call-conversion" strategy="afterInteractive">
+          {`
+            window.gtag_report_conversion = function(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-18461296898/3hnWCInMrP0cEIKShONE',
+                  'value': 1.0,
+                  'currency': 'INR',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `}
+        </Script>
       </head>
       <body>{children}</body>
     </html>

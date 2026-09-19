@@ -377,7 +377,7 @@ function Navbar({ onCTAClick }) {
           <div className="hidden items-center gap-6 text-sm font-semibold text-ink-600 md:flex">
             {navLinks.map((l) => <a key={l} href={`#${l.toLowerCase()}`} className="nav-underline hover:text-moss-800">{l}</a>)}
             <button onClick={() => onCTAClick('Apply Now')} className="rounded-md bg-moss-800 px-4 py-2 text-white transition-transform hover:-translate-y-0.5 hover:shadow-card">Apply now</button>
-            <a href={`tel:${PHONE_TEL}`} className="flex items-center gap-2 rounded-md bg-ochre-500 px-4 py-2 text-night-900 transition-transform hover:-translate-y-0.5 hover:shadow-card"><Icon.Phone size={14} /> Call us</a>
+            <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="flex items-center gap-2 rounded-md bg-ochre-500 px-4 py-2 text-night-900 transition-transform hover:-translate-y-0.5 hover:shadow-card"><Icon.Phone size={14} /> Call us</a>
           </div>
           <button onClick={() => setMenuOpen((o) => !o)} className="p-2 md:hidden" aria-label="Menu">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#214b0a" strokeWidth="2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
@@ -388,7 +388,7 @@ function Navbar({ onCTAClick }) {
         <div className="gutter fixed inset-x-0 top-20 z-40 flex flex-col gap-3 border-b-2 border-moss-800 bg-white p-5 md:hidden">
           {navLinks.map((l) => <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="border-b border-sand-200 py-2 text-sm font-semibold text-moss-800">{l}</a>)}
           <button onClick={() => { onCTAClick('Apply Now'); setMenuOpen(false) }} className="rounded-md bg-moss-800 py-3 font-semibold text-white">Apply now</button>
-          <a href={`tel:${PHONE_TEL}`} className="flex items-center justify-center gap-2 rounded-md bg-ochre-500 py-3 font-semibold text-night-900"><Icon.Phone size={16} /> Call {PHONE_DISPLAY}</a>
+          <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="flex items-center justify-center gap-2 rounded-md bg-ochre-500 py-3 font-semibold text-night-900"><Icon.Phone size={16} /> Call {PHONE_DISPLAY}</a>
         </div>
       )}
     </>
@@ -494,7 +494,7 @@ export default function GreenBeautyFarmsPage() {
             <div className="hero-enter hero-enter-delay-3 flex flex-wrap justify-center gap-3 lg:justify-start">
               <button onClick={() => openModal('Book a Free Site Visit')} className="btn-cta btn-glow rounded-lg bg-gradient-to-r from-ochre-500 via-ochre-600 to-ochre-500 px-6 py-3.5 font-semibold text-night-900">Book a free site visit</button>
               <button onClick={() => openModal('Get Pricing & Payment Plan')} className="rounded-lg border-2 border-moss-800 px-6 py-3.5 font-semibold text-moss-800 transition-colors hover:bg-moss-800 hover:text-white lg:border-ochre-500 lg:text-ochre-500 lg:hover:bg-ochre-500 lg:hover:text-night-900">Get pricing details</button>
-              <a href={`tel:${PHONE_TEL}`} className="flex items-center gap-2 rounded-lg border-2 border-ink-900/20 px-6 py-3.5 font-semibold text-ink-900 transition-colors hover:bg-ink-900/5 lg:border-white/40 lg:text-white lg:hover:bg-white/10"><Icon.Phone size={15} /> Call now</a>
+              <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="flex items-center gap-2 rounded-lg border-2 border-ink-900/20 px-6 py-3.5 font-semibold text-ink-900 transition-colors hover:bg-ink-900/5 lg:border-white/40 lg:text-white lg:hover:bg-white/10"><Icon.Phone size={15} /> Call now</a>
             </div>
           </div>
           <div className="hero-enter hero-enter-delay-2 gutter px-5 lg:px-0">
@@ -583,7 +583,7 @@ export default function GreenBeautyFarmsPage() {
 
           <Reveal className="mt-14 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center">
             <button onClick={() => openModal('Plot vs Farmhouse — Which Is Right For Me?')} className="hover-lift rounded-lg bg-moss-800 px-6 py-3.5 font-semibold text-white">Help me choose: plot or farmhouse</button>
-            <a href={`tel:${PHONE_TEL}`} className="hover-lift flex items-center gap-2 rounded-lg border-2 border-moss-800 px-6 py-3.5 font-semibold text-moss-800"><Icon.Phone size={15} /> Speak to an advisor</a>
+            <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="hover-lift flex items-center gap-2 rounded-lg border-2 border-moss-800 px-6 py-3.5 font-semibold text-moss-800"><Icon.Phone size={15} /> Speak to an advisor</a>
           </Reveal>
         </div>
       </section>
@@ -839,7 +839,7 @@ export default function GreenBeautyFarmsPage() {
               Whichever route you take, check the same three things you would anywhere: that the title is clean and the registry happens at booking, that the layout has approvals you can read yourself, and that the basics — road, boundary, water, electricity — are already on the ground rather than promised for a later phase. We share the full document file before you book, and a site visit takes about half a day including the drive.
             </p>
             <p>
-              To see the plots in person, call <a href={`tel:${PHONE_TEL}`} className="font-semibold text-ochre-500 underline">{PHONE_DISPLAY}</a>, message us on <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-ochre-500 underline">WhatsApp</a>, or leave your number in any form on this page and an advisor will call back the same day.
+              To see the plots in person, call <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="font-semibold text-ochre-500 underline">{PHONE_DISPLAY}</a>, message us on <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-ochre-500 underline">WhatsApp</a>, or leave your number in any form on this page and an advisor will call back the same day.
             </p>
           </div>
         </div>
@@ -854,7 +854,7 @@ export default function GreenBeautyFarmsPage() {
               <p className="mb-5 text-sm leading-relaxed text-ink-400">Green Beauty Farms is a gated farmhouse plot and villa community in Sector 135 on the Noida Expressway, with a pool, landscaped greenery and 24×7 security.</p>
               <div className="flex gap-2.5">
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex h-9 w-9 items-center justify-center rounded bg-[#25D366] text-white"><Icon.WhatsApp size={18} /></a>
-                <a href={`tel:${PHONE_TEL}`} aria-label="Call" className="flex h-9 w-9 items-center justify-center rounded bg-moss-800 text-white"><Icon.Phone size={16} /></a>
+                <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} aria-label="Call" className="flex h-9 w-9 items-center justify-center rounded bg-moss-800 text-white"><Icon.Phone size={16} /></a>
                 <a href={`mailto:${EMAIL}`} aria-label="Email" className="flex h-9 w-9 items-center justify-center rounded bg-night-700 text-white"><Icon.Mail size={16} /></a>
               </div>
             </div>
@@ -885,7 +885,7 @@ export default function GreenBeautyFarmsPage() {
       {/* Sticky mobile CTA bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-sand-200 bg-white/95 p-3 backdrop-blur md:hidden">
         <button onClick={() => openModal('Book a Free Site Visit')} className="btn-cta flex-1 rounded-lg bg-gradient-to-r from-ochre-500 via-ochre-600 to-ochre-500 py-3 text-sm font-semibold text-night-900">Book a site visit</button>
-        <a href={`tel:${PHONE_TEL}`} className="flex items-center justify-center gap-2 rounded-lg bg-moss-800 px-5 py-3 text-sm font-semibold text-white"><Icon.Phone size={15} /> Call</a>
+        <a href={`tel:${PHONE_TEL}`} onClick={() => window.gtag_report_conversion && window.gtag_report_conversion()} className="flex items-center justify-center gap-2 rounded-lg bg-moss-800 px-5 py-3 text-sm font-semibold text-white"><Icon.Phone size={15} /> Call</a>
       </div>
 
       <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%2C%20I%20am%20interested%20in%20Green%20Beauty%20Farms.`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="float-anim fixed bottom-20 right-4 z-40 flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#25D366] p-3.5 text-white shadow-deep md:bottom-6">
