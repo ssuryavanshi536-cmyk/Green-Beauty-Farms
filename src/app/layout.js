@@ -156,14 +156,13 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
         />
 
-        {/* TODO: replace with the real Google Ads / Analytics tag ID */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX" strategy="afterInteractive" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-18461296898" strategy="afterInteractive" />
         <Script id="google-tag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'AW-XXXXXXXXXX', { allow_enhanced_conversions: true });
+            gtag('config', 'AW-18461296898', { allow_enhanced_conversions: true });
           `}
         </Script>
       </head>

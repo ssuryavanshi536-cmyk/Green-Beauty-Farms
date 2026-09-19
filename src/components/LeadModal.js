@@ -74,7 +74,7 @@ export default function LeadModal({ isOpen, onClose, triggerText = '', inline = 
         if (typeof window !== 'undefined' && window.gtag) {
           // TODO: replace with the real Google Ads conversion label
           window.gtag('event', 'conversion', {
-            send_to: 'AW-XXXXXXXXXX/CONVERSION_LABEL',
+            send_to: 'AW-18461296898/CONVERSION_LABEL',
             value: 1.0,
             currency: 'INR',
           })
