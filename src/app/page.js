@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import LeadModal from '../components/LeadModal'
+import LeadModal, { hasSubmittedLead, markLeadSubmitted } from '../components/LeadModal'
 
 /* ── Project imagery ──
    Hero photo is intentionally left as it was. Everything else points at the
@@ -246,6 +246,8 @@ function EnquiryForm({ source, dark = true, heroMobile = false }) {
       const data = await res.json()
       if (data.success) {
         setSubmitted(true)
+        markLeadSubmitted()
+        markLeadSubmitted()
         if (typeof window !== 'undefined' && window.gtag) {
           // TODO: replace with the real Google Ads conversion label
           window.gtag('event', 'conversion', {
@@ -411,12 +413,12 @@ export default function GreenBeautyFarmsPage() {
   const openModal = (title = '') => { setModalTitle(title); setModalOpen(true) }
 
   useEffect(() => {
-    const t = setTimeout(() => openModal('Book a Free Site Visit'), 2500)
+    const t = setTimeout(() => { if (!hasSubmittedLead()) openModal('Book a Free Site Visit') }, 2500)
     return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
-    const i = setInterval(() => { if (!modalOpen) openModal('Book a Free Site Visit') }, 30000)
+    const i = setInterval(() => { if (!modalOpen && !hasSubmittedLead()) openModal('Book a Free Site Visit') }, 30000)
     return () => clearInterval(i)
   }, [modalOpen])
 
@@ -429,7 +431,7 @@ export default function GreenBeautyFarmsPage() {
     const el = document.getElementById('siteplan')
     if (!el) return
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { openModal('Book a Free Site Visit'); obs.disconnect() } })
+      entries.forEach((e) => { if (e.isIntersecting) { if (!hasSubmittedLead()) openModal('Book a Free Site Visit'); obs.disconnect() } })
     }, { threshold: 0.3 })
     obs.observe(el)
     return () => obs.disconnect()

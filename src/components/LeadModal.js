@@ -6,6 +6,22 @@ const interestOptions = ['Plot Only', 'Ready Farmhouse', 'Not Sure Yet']
 
 const PHONE_DISPLAY = '+91 83682 07535'
 
+/* Shared "already enquired" flag. localStorage survives reloads and return visits;
+   the window flag covers browsers where localStorage is blocked. */
+const LEAD_KEY = 'gbf_lead_submitted'
+
+export const hasSubmittedLead = () => {
+  if (typeof window === 'undefined') return false
+  if (window.__gbfLeadSubmitted) return true
+  try { return window.localStorage.getItem(LEAD_KEY) === '1' } catch { return false }
+}
+
+export const markLeadSubmitted = () => {
+  if (typeof window === 'undefined') return
+  window.__gbfLeadSubmitted = true
+  try { window.localStorage.setItem(LEAD_KEY, '1') } catch {}
+}
+
 const inputClass = (hasError) =>
   `w-full rounded-lg border px-4 py-3 text-sm text-ink-900 outline-none transition-colors bg-white placeholder:text-ink-400 ${
     hasError ? 'border-danger' : 'border-white/20 focus:border-ochre-500'
@@ -71,6 +87,7 @@ export default function LeadModal({ isOpen, onClose, triggerText = '', inline = 
 
       if (data.success) {
         setSubmitted(true)
+        markLeadSubmitted()
         if (typeof window !== 'undefined' && window.gtag) {
           // TODO: replace with the real Google Ads conversion label
           window.gtag('event', 'conversion', {
