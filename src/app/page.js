@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import LeadModal, { hasSubmittedLead, markLeadSubmitted } from '../components/LeadModal'
+import LeadModal, { hasSubmittedLead, sendLead } from '../components/LeadModal'
 
 /* ── Project imagery ──
    Hero photo is intentionally left as it was. Everything else points at the
@@ -67,9 +67,6 @@ const EMAIL = 'ssuryavanshi536@gmail.com'
 const STARTING_PRICE = '₹8,500 / Sq. Yd.'
 const PLOT_PRICE_RANGE = '₹8,500 – ₹9,500 per Gaj'
 const FARMHOUSE_PRICE = '₹1.30 Cr'
-
-/* ── Lead capture ── */
-const WEB3FORMS_ACCESS_KEY = '8f24ac60-8971-4ce1-bca8-b80ebdc035a3'
 
 /* ── Google Maps embed (Sector 135, Noida Expressway) ── */
 const MAP_EMBED_SRC =
@@ -228,8 +225,10 @@ function EnquiryForm({ source, dark = true, heroMobile = false }) {
     setSubmitting(true)
     setServerError('')
     try {
-      const payload = {
-        access_key: WEB3FORMS_ACCESS_KEY,
+      // sendLead() sends the email + fires the Google Ads conversion only for the
+      // visitor's FIRST enquiry. On any later enquiry it skips both and just
+      // returns success, so the visitor still sees the normal thank-you screen.
+      const result = await sendLead({
         subject: `New Enquiry – Green Beauty Farms | ${source}`,
         from_name: 'Green Beauty Farms Website',
         name: form.name,
@@ -237,27 +236,11 @@ function EnquiryForm({ source, dark = true, heroMobile = false }) {
         email: form.email || 'Not provided',
         interested_in: form.interest || 'Not specified',
         source,
-      }
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
       })
-      const data = await res.json()
-      if (data.success) {
+      if (result.success) {
         setSubmitted(true)
-        markLeadSubmitted()
-        markLeadSubmitted()
-        if (typeof window !== 'undefined' && window.gtag) {
-          // TODO: replace with the real Google Ads conversion label
-          window.gtag('event', 'conversion', {
-            send_to: 'AW-18461296898/xT2HCJWTj_0cEIKShONE',
-            value: 1.0,
-            currency: 'INR',
-          })
-        }
       } else {
-        setServerError(data.message || 'That did not go through. Try again, or call us directly.')
+        setServerError(result.message || 'That did not go through. Try again, or call us directly.')
       }
     } catch {
       setServerError('Network error. Check your connection and try again.')

@@ -22,6 +22,45 @@ export const markLeadSubmitted = () => {
   try { window.localStorage.setItem(LEAD_KEY, '1') } catch {}
 }
 
+/* ── Single entry point for every form on the site ──
+   First submission: sends the email via Web3Forms, fires the Google Ads
+   conversion, and marks the visitor as "already enquired".
+   Any later submission: the visitor still sees the normal thank-you screen,
+   but NOTHING is sent — no email, no conversion — so there are no duplicates.
+   Returns { success: boolean, message?: string, duplicate?: boolean }.
+   Network errors are thrown so the calling form can show its own message. */
+export async function sendLead(payload) {
+  // Already enquired once: pretend success, send nothing.
+  if (hasSubmittedLead()) {
+    return { success: true, duplicate: true }
+  }
+
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ access_key: WEB3FORMS_ACCESS_KEY, ...payload }),
+  })
+  const data = await res.json()
+
+  if (!data.success) {
+    return { success: false, message: data.message }
+  }
+
+  // Mark first so a quick second submit can never slip through.
+  markLeadSubmitted()
+
+  if (typeof window !== 'undefined' && window.gtag) {
+    // TODO: replace with the real Google Ads conversion label
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-18461296898/xT2HCJWTj_0cEIKShONE',
+      value: 1.0,
+      currency: 'INR',
+    })
+  }
+
+  return { success: true, duplicate: false }
+}
+
 const inputClass = (hasError) =>
   `w-full rounded-lg border px-4 py-3 text-sm text-ink-900 outline-none transition-colors bg-white placeholder:text-ink-400 ${
     hasError ? 'border-danger' : 'border-white/20 focus:border-ochre-500'
@@ -66,8 +105,7 @@ export default function LeadModal({ isOpen, onClose, triggerText = '', inline = 
     setServerError('')
 
     try {
-      const payload = {
-        access_key: WEB3FORMS_ACCESS_KEY,
+      const result = await sendLead({
         subject: `New Enquiry – Green Beauty Farms | ${triggerText || 'Website'}`,
         from_name: 'Green Beauty Farms Website',
         name: form.name,
@@ -76,28 +114,12 @@ export default function LeadModal({ isOpen, onClose, triggerText = '', inline = 
         interested_in: form.interest,
         message: form.message || 'No message provided',
         source: triggerText || 'Lead Modal',
-      }
-
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
       })
-      const data = await res.json()
 
-      if (data.success) {
+      if (result.success) {
         setSubmitted(true)
-        markLeadSubmitted()
-        if (typeof window !== 'undefined' && window.gtag) {
-          // TODO: replace with the real Google Ads conversion label
-          window.gtag('event', 'conversion', {
-            send_to: 'AW-18461296898/xT2HCJWTj_0cEIKShONE',
-            value: 1.0,
-            currency: 'INR',
-          })
-        }
       } else {
-        setServerError(data.message || 'That did not go through. Try again, or call us directly.')
+        setServerError(result.message || 'That did not go through. Try again, or call us directly.')
       }
     } catch {
       setServerError('Network error. Check your connection and try again.')
